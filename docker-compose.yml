@@ -1,0 +1,27 @@
+services:
+  birthday-greetings:
+    image: birthday-greetings
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - birthdaydb
+    restart: always
+    environment:
+      - DB_HOST=birthdaydb
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=birthday_db
+      - JWT_SECRET_KEY=5xxYdFM2YJH/4h9dhCwh4OH00B96Mzl7xa1fanPxmm4=
+
+  birthdaydb:
+    image: postgres:alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=birthday_db
+    ports:
+      - "5432:5432" #Убрать
