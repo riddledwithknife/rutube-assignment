@@ -5,7 +5,9 @@ import (
 	"gopkg.in/gomail.v2"
 	"gorm.io/gorm"
 	"log"
+	"os"
 	"rutube-assignment/internal/models"
+	"strconv"
 	"time"
 )
 
@@ -17,12 +19,13 @@ type SMTPSender struct{}
 
 func (s SMTPSender) Send(to string, subject string, body string) error {
 	m := gomail.NewMessage()
-	m.SetHeader("From", "youremail@example.com")
+	m.SetHeader("From", os.Getenv("SMTP_HOST"))
 	m.SetHeader("To", to)
 	m.SetHeader("Subject", subject)
 	m.SetBody("text/plain", body)
 
-	d := gomail.NewDialer("smtp.example.com", 587, "user", "password")
+	port, _ := strconv.Atoi(os.Getenv("SMTP_PORT"))
+	d := gomail.NewDialer(os.Getenv("SMTP_HOST"), port, os.Getenv("SMTP_USER"), os.Getenv("SMTP_PASSWORD"))
 
 	return d.DialAndSend(m)
 }

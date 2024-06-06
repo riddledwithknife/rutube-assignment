@@ -16,6 +16,10 @@ services:
       - DB_PASSWORD=postgres
       - DB_NAME=birthday_db
       - JWT_SECRET_KEY=5xxYdFM2YJH/4h9dhCwh4OH00B96Mzl7xa1fanPxmm4=
+      - SMTP_HOST=smtp.mail.com
+      - SMTP_PORT=587
+      - SMTP_USER=your-email@gmail.com
+      - SMTP_PASSWORD=your-email-password
 
   birthdaydb:
     image: postgres:alpine
